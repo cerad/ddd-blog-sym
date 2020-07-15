@@ -11,6 +11,10 @@ return function (RoutingConfigurator $routes) {
     $routes->add('home_index', "/")
         ->controller(HomeIndexAction::class)
     ;
+    $blogRoutes = $routes->collection('blog_')->prefix('blog');
+    $blogRoutes->add('edit','/edit')->controller(HomeIndexAction::class);
+    $blogRoutes->add('list','/list')->controller(HomeIndexAction::class);
+
     /*
     $shoePrefix = 'shoe';
     $routes->add('shoe_list', "/$shoePrefix/list")

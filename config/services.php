@@ -4,6 +4,7 @@
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use App\Core\Action\ActionInterface;
+use App\Person\Command\PersonTestCommand;
 
 return function(ContainerConfigurator $configurator)
 {
@@ -14,26 +15,17 @@ return function(ContainerConfigurator $configurator)
     $services->instanceof(ActionInterface::class)
         ->tag('controller.service_arguments');
 
-    //$services->load('App\\', '../src/*')
-    //    ->exclude('../src/{DependencyInjection,Migrations,Tests,Kernel.php}');
-
-    // Base
+    // Home
     $services->load('App\\Home\\', '../src/Home/*')
         ->exclude('../src/Home/{}');
-/*
-    // Shoe
-    $services->load('App\\Shoe\\', '../src/Shoe/*')
-        ->exclude('../src/Shoe/{Shoe.php,ShoeMapper.php}');
 
-    // ShoeStore
+    // Blog
     $files = implode(',',[
-        'ShoeStore.php',
-        'ShoeStoreMapper.php',
-        'ShoeStoreSummaryRow.php',
-        'Table/MyFormView.php',
+        'Model/BlogEntity.php',
+        'Model/BlogId.php',
     ]);
+    $services->load('App\\Blog\\', '../src/Blog/*')
+        ->exclude("../src/Blog/{{$files}}");
 
-    $services->load('App\\ShoeStore\\', '../src/ShoeStore/*')
-        ->exclude("../src/ShoeStore/{{$files}}");
-*/
+    $services->set(PersonTestCommand::class);
 };
